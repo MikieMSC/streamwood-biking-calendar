@@ -1,0 +1,6 @@
+playwright==1.46.0
+beautifulsoup4==4.12.3
+lxml==5.2.2
+ics==0.7.2
+python-dateutil==2.9.0.post0
+pytz==2024.1
