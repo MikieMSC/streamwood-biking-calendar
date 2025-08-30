@@ -58,9 +58,12 @@ def parse_event_page(html):
 
     for script in soup.find_all("script"):
         txt = script.string or script.text or ""
+        # print(f"txt: {txt}")
         if "event" in txt.lower() and ("start" in txt.lower() or "end" in txt.lower()):
             # Cheap attempt to extract ISO timestamps
+            # print(f"txt: {txt}")
             for m in re.finditer(r"(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}([+-]\d{2}:?\d{2}|Z)?)", txt):
+                print(f"m: {m}")
                 iso = m.group(1)
                 try:
                     dt = dp.parse(iso)
@@ -144,6 +147,7 @@ def main():
         # Optionally inject Facebook cookies (if provided as a single header string).
         # Example value to store in secret: "c_user=...; xs=...; datr=...; sb=...;"
         if cookie_header:
+            print("in cookie_header")
             cookies = []
             for kv in [c.strip() for c in cookie_header.split(";") if "=" in c]:
                 name, value = kv.split("=", 1)
@@ -165,16 +169,33 @@ def main():
             page.wait_for_timeout(1200)
 
         html = page.content()
+        if not html:
+            print(f"no html")
         event_ids = extract_event_ids(html)
+        print(f"event_ids: {event_ids}")
         event_ids = list(unique(event_ids))[:20]  # limit to most recent 20
-
+        print(f"event_ids again: {event_ids}")
+        if event_ids:
+            print(f"event_ids in check: {event_ids}")
+            with open("public/event_ids.txt", "w", encoding="utf-8") as efile:
+                # efile.writelines(event_ids)
+                efile.writelines(map(lambda x: x + '\n', event_ids))
+                # efile.write("test line")
+        
         results = []
+        if os.path.exists("public/event_id_urls.txt"):
+            os.remove("public/event_id_urls.txt")
         for eid in event_ids:
             url = urljoin(BASE, f"events/{eid}")
+            with open("public/event_id_urls.txt", "a", encoding="utf-8") as eufile:
+                eufile.write(url + "\n")
             page.goto(url, wait_until="domcontentloaded", timeout=60000)
             details = parse_event_page(page.content())
+            print(f"details: {details}")
             if not details.get("url"):
                 details["url"] = url
+                print(f"details: {details}")
+                print(f"")
             results.append(details)
 
         browser.close()
@@ -185,3 +206,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
