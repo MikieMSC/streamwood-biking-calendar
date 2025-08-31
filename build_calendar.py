@@ -191,7 +191,7 @@ def main():
                 # efile.write("test line")
         
         results = []
-         os.makedirs(os.path.dirname("public/event_id_urls.txt"), exist_ok=True)
+        os.makedirs(os.path.dirname("public/event_id_urls.txt"), exist_ok=True)
         if os.path.exists("public/event_id_urls.txt"):
             os.remove("public/event_id_urls.txt")
 #        if os.path.exists("event_id_urls.txt"):
