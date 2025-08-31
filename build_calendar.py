@@ -213,6 +213,7 @@ def main():
     # Filter obviously invalid (no start time found)
     results = [r for r in results if r.get("start")]
     build_ics(results)
+    create_index()
 
 if __name__ == "__main__":
     main()
