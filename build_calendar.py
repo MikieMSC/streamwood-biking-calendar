@@ -177,7 +177,8 @@ def main():
         print(f"event_ids again: {event_ids}")
         if event_ids:
             print(f"event_ids in check: {event_ids}")
-            with open("public/event_ids.txt", "w", encoding="utf-8") as efile:
+#            with open("public/event_ids.txt", "w", encoding="utf-8") as efile:
+            with open("event_ids.txt", "w", encoding="utf-8") as efile:
                 # efile.writelines(event_ids)
                 efile.writelines(map(lambda x: x + '\n', event_ids))
                 # efile.write("test line")
