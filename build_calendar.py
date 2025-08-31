@@ -184,11 +184,14 @@ def main():
                 # efile.write("test line")
         
         results = []
-        if os.path.exists("public/event_id_urls.txt"):
-            os.remove("public/event_id_urls.txt")
+#        if os.path.exists("public/event_id_urls.txt"):
+#            os.remove("public/event_id_urls.txt")
+        if os.path.exists("event_id_urls.txt"):
+            os.remove("event_id_urls.txt")
         for eid in event_ids:
             url = urljoin(BASE, f"events/{eid}")
-            with open("public/event_id_urls.txt", "a", encoding="utf-8") as eufile:
+#            with open("public/event_id_urls.txt", "a", encoding="utf-8") as eufile:
+            with open("event_id_urls.txt", "a", encoding="utf-8") as eufile:
                 eufile.write(url + "\n")
             page.goto(url, wait_until="domcontentloaded", timeout=60000)
             details = parse_event_page(page.content())
