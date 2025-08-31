@@ -140,7 +140,7 @@ def build_ics(events, outfile="public/streamwood_biking.ics"):
 def create_index(outfile="public/index.html"):
     os.makedirs(os.path.dirname(outfile), exist_ok=True)
     with open(outfile, "w", encoding="utf-8") as infil:
-        infil.write("<html><body>This is test index for SB Cal<br><a href="event_id_urls.txt">event_id_urls txt</a><br></body></html>")
+        infil.write("<html><body>This is test index for SB Cal<br><a href=\"event_id_urls.txt\">event_id_urls txt</a><br></body></html>")
     print(f"wrote {outfile}")
 
 def main():
