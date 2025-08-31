@@ -137,6 +137,12 @@ def build_ics(events, outfile="public/streamwood_biking.ics"):
         f.writelines(cal)
     print(f"wrote {outfile}")
 
+def create_index(outfile="public/index.html"):
+    s.makedirs(os.path.dirname(outfile), exist_ok=True)
+    with open(outfile, "w", encoding="utf-8") as infil:
+        infil.write("<html><body>This is test index for SB Cal</body></html>")
+    print(f"wrote {outfile}")
+
 def main():
     cookie_header = os.environ.get("FB_COOKIE", "").strip()
 
